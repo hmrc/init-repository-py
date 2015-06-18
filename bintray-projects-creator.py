@@ -3,9 +3,10 @@ __author__ = 'ck'
 import csv
 import os
 import sys
+import json
+
 import requests
 from requests.auth import HTTPBasicAuth
-import json
 
 bintray_api_root = "https://bintray.com/api/v1"
 
@@ -14,14 +15,12 @@ def read_prop_file(f):
     return dict([(row[0].strip(), row[1].strip()) for row in csv.reader(open(f, 'r'), delimiter='=')])
 
 
-bintray_props = read_prop_file(os.path.expanduser('~/.bintray/.credentials'))
-
-
 def create_bintray_repo(repo_name, package_name):
     url = bintray_api_root + "/packages/hmrc/" + repo_name
     git_repo = "https://github.com/hmrc/" + package_name
 
-    print(url)
+    bintray_props = read_prop_file(os.path.expanduser('~/.bintray/.credentials'))
+
     payload = {
         "name": package_name,
         "desc": package_name,
@@ -42,12 +41,12 @@ def create_bintray_repo(repo_name, package_name):
                          headers={'content-type': 'application/json'})
 
 
-def bintray_post(package_name):
-    repos = ['releases', 'release-candidates']
+def create_packages(package_name):
+    repo_names = ['releases', 'release-candidates']
 
     last_response = None
 
-    for repo_name in repos:
+    for repo_name in repo_names:
         last_response = create_bintray_repo(repo_name, package_name)
 
         if last_response.status_code != 201:
@@ -65,7 +64,7 @@ if len(sys.argv) != 2:
 new_repo_name = sys.argv[1]
 print('creating %s on bintray' % new_repo_name)
 
-bintray_response = bintray_post(new_repo_name)
+bintray_response = create_packages(new_repo_name)
 
 if bintray_response.status_code == 201:
     print('successfully created bintray repositories')
