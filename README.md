@@ -2,9 +2,16 @@
 
 A collection of scripts to initialise a HMRC repository on [GitHub](https://www.github.com/hmrc), [Travis](https://www.travis-ci.org/hmrc), and [Bintray](https://www.bintray.com/hmrc)
 
-# Using
+# Prototype Usage
 
-Run `python init-repository.py REPOSITORY COLLABORATOR (BOOTSTRAP_TAG) (PLUGIN)`
+Run `python init-repository.py REPOSITORY` to execute the following commands:
+
+1. Create a Bintray package `REPOSITORY` within https://www.bintray.com/hmrc/release-candidates linked to `REPOSITORY` within https://www.github.com/hmrc
+2. Create a Bintray package `REPOSITORY` within https://www.bintray.com/hmrc/releases linked to `REPOSITORY` within https://www.github.com/hmrc
+
+# Expected Usage
+
+Run `python init-repository.py REPOSITORY COLLABORATOR (BOOTSTRAP_TAG) (PLUGIN)` to execute the followig commands:
 
 1. Check GitHub repository `REPOSITORY` does not exist within https://www.github.com/hmrc
 2. Create a GitHub repository `REPOSITORY` within https://www.github.com/hmrc
@@ -16,4 +23,4 @@ Run `python init-repository.py REPOSITORY COLLABORATOR (BOOTSTRAP_TAG) (PLUGIN)`
 8. Create a Bintray package `REPOSITORY` within https://www.bintray.com/hmrc/release-candidates (or https://bintray.com/hmrc/sbt-plugin-release-candidates if `PLUGIN` is present), linked to `REPOSITORY` within https://www.github.com/hmrc
 9. Create a Bintray package `REPOSITORY` within https://www.bintray.com/hmrc/releases/ (or https://bintray.com/hmrc/sbt-plugin-releases if `PLUGIN` is present)
 
-The HMRC and Bintray credentials are intentionally omitted from this repository for security reasons. These scripts are useless without them.
+The HMRC and Bintray credentials are intentionally omitted from this repository for security reasons. This repository is useless without them.
